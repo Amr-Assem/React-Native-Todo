@@ -5,9 +5,10 @@ import {
   Text,
   View,
   TextInput,
-  TouchableOpacity,
+  Pressable,
   FlatList,
   Alert,
+  Modal,
 } from "react-native";
 import TodoItem from "../components/TodoItem";
 import { useNavigation } from "@react-navigation/native";
@@ -19,6 +20,8 @@ export default function Home() {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
   /* ------------------------------ Async Storage ----------------------------- */
   useEffect(() => {
@@ -59,9 +62,16 @@ export default function Home() {
     }
   }
 
+  /* ------------------------- Show Delete Modal ------------------------- */
+  function showDeleteModal(id) {
+    setTaskToDelete(id);
+    setIsModalVisible(true);
+  }
+
   /* ------------------------------- Remove Task ------------------------------ */
   function removeTask(id) {
     setTasks(tasks.filter((task) => task.id !== id));
+    setIsModalVisible(false); // Hide the modal after deletion
   }
 
   /* ------------------------- Toggle Task Completion ------------------------- */
@@ -92,22 +102,22 @@ export default function Home() {
         value={taskDescription}
         onChangeText={setTaskDescription}
       />
-      <TouchableOpacity style={styles.submitBtn} onPress={addTask}>
+      <Pressable style={styles.submitBtn} onPress={addTask}>
         <Text style={styles.text}>Submit</Text>
-      </TouchableOpacity>
+      </Pressable>
       <View style={{ ...styles.dividerLine, marginVertical: 24 }} />
 
       {/* --------------------------------- Filter --------------------------------- */}
       <View style={styles.filterContainer}>
-        <TouchableOpacity style={styles.activeFilterBtn}>
+        <Pressable style={styles.activeFilterBtn}>
           <Text style={styles.activeFilterText}>All</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterBtn}>
+        </Pressable>
+        <Pressable style={styles.filterBtn}>
           <Text style={styles.filterText}>Active</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterBtn}>
+        </Pressable>
+        <Pressable style={styles.filterBtn}>
           <Text style={styles.filterText}>Done</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
       {/* ------------------------------- To-do List ------------------------------- */}
@@ -122,7 +132,7 @@ export default function Home() {
               item={item}
               navigation={navigation}
               toggleTask={toggleTask}
-              removeTask={removeTask}
+              showDeleteModal={showDeleteModal}
             />
           )}
           // Each item receives "item" (the data itself)
@@ -136,6 +146,37 @@ export default function Home() {
           <TodoItem item={task} key={task.id} />
         ))} */}
       </View>
+
+      {/* ------------------------ Delete Confirmation Modal ----------------------- */}
+      <Modal
+        visible={isModalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setIsModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Confirm Deletion</Text>
+            <Text style={styles.modalText}>
+              Are you sure you want to delete this task?
+            </Text>
+            <View style={styles.modalActions}>
+              <Pressable
+                style={styles.cancelBtn}
+                onPress={() => setIsModalVisible(false)}
+              >
+                <Text style={styles.cancelBtnText}>Cancel</Text>
+              </Pressable>
+              <Pressable
+                style={styles.deleteBtn}
+                onPress={() => removeTask(taskToDelete)}
+              >
+                <Text style={styles.deleteBtnText}>Delete</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }

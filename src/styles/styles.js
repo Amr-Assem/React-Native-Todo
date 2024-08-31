@@ -89,20 +89,16 @@ export const styles = StyleSheet.create({
   },
   todosContainer: {
     marginTop: 24,
+    width: "90%",
   },
   doneTodo: {
-    // width: "80%",
     textDecorationLine: "line-through",
     fontSize: 16
   },
   pendingTodo: {
-    // width: "80%",
     fontSize: 16
   },
   todoRow: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 8,
     padding: 12,
     borderBottomColor: "#b0b0b0",
     borderBottomWidth: 1,
@@ -119,5 +115,58 @@ export const styles = StyleSheet.create({
     borderColor: "#aeaeae",
     borderWidth: 1,
     borderRadius: 4,
-  }
+  },
+
+  /* ------------------------------- Modal Style ------------------------------ */
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 16,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  modalText: {
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  modalActions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    gap: 8
+  },
+  cancelBtn: {
+    backgroundColor: "#000000",
+    paddingVertical: 10,
+    borderRadius: 8,
+    flex: 1
+  },
+  cancelBtnText: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 16,
+  },
+  deleteBtn: {
+    backgroundColor: "#d40e41",
+    paddingVertical: 10,
+    borderRadius: 8,
+    flex: 1,
+  },
+  deleteBtnText: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 16,
+  },
 });

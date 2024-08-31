@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  TextInput,
+  ImageBackground,
+} from "react-native";
 import React from "react";
 import { useRoute } from "@react-navigation/native";
 import { styles } from "../styles/styles";
@@ -9,8 +15,10 @@ export default function TodoDetails({ route }) {
   // const { item } = useRoute().params; // method 2
   // I'm just keeping them for reference :)
 
+  const image = require("../../assets/bg.png");
+
   return (
-    <View style={styles.container}>
+    <ImageBackground source={image} resizeMode="cover" style={styles.container}>
       <StatusBar style="auto" />
       <Text style={styles.header}>TASK DETAILS</Text>
       <Text style={item.isCompleted ? styles.completed : styles.incomplete}>
@@ -20,6 +28,6 @@ export default function TodoDetails({ route }) {
       <Text multiline={true} style={{ ...styles.input, height: 104 }}>
         {item.description}
       </Text>
-    </View>
+    </ImageBackground>
   );
 }
