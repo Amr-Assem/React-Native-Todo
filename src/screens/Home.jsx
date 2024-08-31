@@ -1,6 +1,6 @@
 import { styles } from "../styles/styles";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -11,38 +11,42 @@ import {
 } from "react-native";
 import TodoItem from "../components/TodoItem";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
   const navigation = useNavigation();
 
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "React Native Lecture",
-      description: "Task 1 description",
-      isCompleted: true,
-    },
-    {
-      id: 2,
-      title: "React Native Lab",
-      description: "Task 2 description",
-      isCompleted: true,
-    },
-    {
-      id: 3,
-      title: "Read more about React UI Components",
-      description: "Task 3 description",
-      isCompleted: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  /* ------------------------------ Async Storage ----------------------------- */
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  useEffect(() => {
+    saveTasks(tasks);
+  }, [tasks]);
+
+  async function loadTasks() {
+    const savedTasks = await AsyncStorage.getItem("tasks");
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+    } else {
+      setTasks([]);
+    }
+  }
+
+  async function saveTasks(tasks) {
+    await AsyncStorage.setItem("tasks", JSON.stringify(tasks));
+  }
 
   /* -------------------------------- Add Task -------------------------------- */
   function addTask() {
     if (taskTitle) {
       const newTask = {
-        id: Date.now(),
+        id: Date.now().toString(),
         title: taskTitle,
         description: taskDescription,
         isCompleted: false,
