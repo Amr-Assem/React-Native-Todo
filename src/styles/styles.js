@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   header: {
-    marginTop: 48,
+    marginTop: 24,
     marginBottom: 10,
     fontSize: 36,
     fontWeight: "500"
@@ -23,6 +23,16 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16,
     textAlignVertical: "top",
+  },
+  completed: {
+    color: "green",
+    fontSize: 14,
+    paddingBottom: 8,
+  },
+  incomplete: {
+    color: "red",
+    fontSize: 14,
+    paddingBottom: 8,
   },
   submitBtn: {
     width: "50%",
@@ -81,12 +91,12 @@ export const styles = StyleSheet.create({
     marginTop: 24,
   },
   doneTodo: {
-    width: "80%",
+    // width: "80%",
     textDecorationLine: "line-through",
     fontSize: 16
   },
   pendingTodo: {
-    width: "80%",
+    // width: "80%",
     fontSize: 16
   },
   todoRow: {
