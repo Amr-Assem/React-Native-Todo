@@ -1,9 +1,9 @@
-## Lab 3
-- Use FlexBox in TodoItem
-- Create a modal to confirm deletion
-- Use ImageBackground
-- Make orientation "default"
-- Install Redux and create an empty slice with the name "todoSlice"
+## Lab 4
+- Divide code into (TodoForm, Todos, TodoItem)
+- Make all actions managed by redux
+- Show completed tasks in CompletedTasks screen
+- Use AsyncThunk to create API requests (+bonus)
+- https://jsonplaceholder.typicode.com/todos/
 
 ---
-![3](https://github.com/user-attachments/assets/cc9dee61-7e25-40e9-8892-853af890bace)
+![4](https://github.com/user-attachments/assets/baa6fbb8-6153-4b58-bc74-a2171bd6168e)
