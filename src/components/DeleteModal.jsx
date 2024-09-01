@@ -5,7 +5,7 @@ import React from "react";
 export default function DeleteModal({
   isModalVisible,
   setIsModalVisible,
-  removeTask,
+  handleRemoveTask,
 }) {
   return (
     <Modal
@@ -29,7 +29,7 @@ export default function DeleteModal({
             </Pressable>
             <Pressable
               style={styles.deleteBtn}
-              onPress={() => removeTask()}
+              onPress={() => handleRemoveTask()}
             >
               <Text style={styles.deleteBtnText}>Delete</Text>
             </Pressable>

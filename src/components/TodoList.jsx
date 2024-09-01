@@ -4,35 +4,44 @@ import { styles } from "../styles/styles";
 import DeleteModal from "./DeleteModal";
 import TodoItem from "./TodoItem";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { markAsCompleted, removeTask } from "../redux/slices/todoSlice";
 
-export default function TodoList({ tasks, setTasks }) {
+export default function TodoList() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  /* ------------------------- Show Delete Modal ------------------------- */
+  const { tasks } = useSelector((state) => state.todoSlice);
+
+  /* --------------------------- Show Delete Modal --------------------------- */
   function showDeleteModal(id) {
     setTaskToDelete(id);
     setIsModalVisible(true);
   }
 
   /* ------------------------------- Remove Task ------------------------------ */
-  function removeTask(id) {
-    setTasks(tasks.filter((task) => task.id !== id));
+  function handleRemoveTask(id) {
+    dispatch(removeTask(id));
+    // setTasks(tasks.filter((task) => task.id !== id));
     setIsModalVisible(false);
   }
 
   /* ------------------------- Toggle Task Completion ------------------------- */
   function toggleTask(id) {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
-      )
-    );
+    dispatch(markAsCompleted(id));
+    // setTasks(
+    //   tasks.map((task) =>
+    //     task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
+    //   )
+    // );
   }
 
-  return (
+  return tasks.length ? (
     <>
+      <View style={{ ...styles.dividerLine, marginVertical: 24 }} />
+
       <View style={styles.filterContainer}>
         <Pressable style={styles.activeFilterBtn}>
           <Text style={styles.activeFilterText}>All</Text>
@@ -45,7 +54,6 @@ export default function TodoList({ tasks, setTasks }) {
         </Pressable>
       </View>
 
-      {/* <TodoList tasks={tasks} setTasks={setTasks} /> */}
       <View style={styles.todosContainer}>
         {/* Method 1: Using FlatList */}
         <FlatList
@@ -75,10 +83,10 @@ export default function TodoList({ tasks, setTasks }) {
       <DeleteModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
-        removeTask={() => {
-          removeTask(taskToDelete);
+        handleRemoveTask={() => {
+          handleRemoveTask(taskToDelete);
         }}
       />
     </>
-  );
+  ) : null;
 }

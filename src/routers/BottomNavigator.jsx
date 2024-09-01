@@ -26,9 +26,10 @@ export default function BottomNavigator() {
         }}
       >
         <Screen
-          name="Main"
+          name="Main" 
           component={StackNavigator}
           options={{
+            title: "Home",
             headerShown: false,
             tabBarIcon: ({ focused }) =>
               focused ? (

@@ -1,12 +1,15 @@
 import { styles } from "../styles/styles";
 import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTask } from "../redux/slices/todoSlice";
 
-export default function TodoForm({ tasks, setTasks }) {
+export default function TodoForm() {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
+  const dispatch = useDispatch();
 
-  function addTask() {
+  function handleNewTask() {
     if (taskTitle) {
       const newTask = {
         id: Date.now().toString(),
@@ -14,7 +17,8 @@ export default function TodoForm({ tasks, setTasks }) {
         description: taskDescription,
         isCompleted: false,
       };
-      setTasks([...tasks, newTask]);
+      // setTasks([...tasks, newTask]);
+      dispatch(addTask(newTask));
       setTaskTitle("");
       setTaskDescription("");
     } else {
@@ -37,10 +41,9 @@ export default function TodoForm({ tasks, setTasks }) {
         value={taskDescription}
         onChangeText={setTaskDescription}
       />
-      <Pressable style={styles.submitBtn} onPress={addTask}>
+      <Pressable style={styles.submitBtn} onPress={handleNewTask}>
         <Text style={styles.text}>Submit</Text>
       </Pressable>
-      <View style={{ ...styles.dividerLine, marginVertical: 24 }} />
     </>
   );
 }
