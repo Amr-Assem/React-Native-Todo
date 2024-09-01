@@ -15,7 +15,7 @@ export default function TodoForm() {
         id: Date.now().toString(),
         title: taskTitle,
         description: taskDescription,
-        isCompleted: false,
+        completed: false,
       };
       // setTasks([...tasks, newTask]);
       dispatch(addTask(newTask));

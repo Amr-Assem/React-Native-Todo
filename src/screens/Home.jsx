@@ -6,7 +6,7 @@ import TodoList from "../components/TodoList";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "../redux/slices/todoSlice";
+import { addTask, fetchTodos } from "../redux/slices/todoSlice";
 
 export default function Home() {
   /* -------------------------------------------------------------------------- */
@@ -18,11 +18,12 @@ export default function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    loadTasks();
+    // loadTasks(); // (1/2) Uncomment to enable AsyncStorage
+    dispatch(fetchTodos());
   }, []);
 
   useEffect(() => {
-    saveTasks(tasks);
+    // saveTasks(tasks); // (2/2) Uncomment to enable AsyncStorage
   }, [tasks]);
 
   async function loadTasks() {
@@ -50,9 +51,7 @@ export default function Home() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Text style={styles.header}>TODO APP</Text>
-
       <TodoForm />
-
       <TodoList />
     </View>
   );

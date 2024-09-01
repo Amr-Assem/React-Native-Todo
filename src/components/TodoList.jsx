@@ -7,8 +7,16 @@ import { useSelector } from "react-redux";
 
 export default function TodoList() {
   const navigation = useNavigation();
-  const { tasks } = useSelector((state) => state.todoSlice);
+  const { tasks, error, loading } = useSelector((state) => state.todoSlice);
 
+  if (loading)
+    return <Text style={{ paddingTop: 24, fontSize: 16 }}>Loading ...</Text>;
+  if (error)
+    return (
+      <Text style={{ paddingTop: 24, fontSize: 16, color: "red" }}>
+        {error}
+      </Text>
+    );
   return tasks.length ? (
     <>
       <View style={{ ...styles.dividerLine, marginVertical: 24 }} />

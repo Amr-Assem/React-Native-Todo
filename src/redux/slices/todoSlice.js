@@ -1,9 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+export const fetchTodos = createAsyncThunk(
+    `todos/fetchAll`,
+    async () => {
+        const response = await fetch("https://jsonplaceholder.typicode.com/todos/")
+        return (await response.json())
+    }
+)
 
 const todoSlice = createSlice({
     name: "todoSlice",
     initialState: {
         tasks: [],
+        loading: true,
+        error: ''
     },
     reducers: {
         addTask: (state, action) => {
@@ -19,11 +29,19 @@ const todoSlice = createSlice({
         markAsCompleted: (state, action) => {
             const completedId = action.payload;
             const updatedTasks = state.tasks.map((task) =>
-                task.id === completedId ? { ...task, isCompleted: !task.isCompleted } : task
+                task.id === completedId ? { ...task, completed: !task.completed } : task
             )
             state.tasks = updatedTasks
         }
-
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchTodos.fulfilled, (state, action) => {
+            state.tasks = action.payload
+            state.loading = false
+        }).addCase(fetchTodos.rejected, (state, action) => {
+            state.error = "Something went wrong"
+            state.loading = false
+        })
     }
 })
 

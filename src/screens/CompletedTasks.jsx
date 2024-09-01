@@ -11,7 +11,7 @@ export default function CompletedTasks() {
 
   const [CompletedTasks, setCompletedTasks] = useState([]);
   useEffect(() => {
-    setCompletedTasks(tasks.filter((res) => res.isCompleted));
+    setCompletedTasks(tasks.filter((res) => res.completed));
   }, [tasks]);
 
   return (

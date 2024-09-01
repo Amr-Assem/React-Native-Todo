@@ -33,7 +33,7 @@ export default function TodoItem({
   function toggleTask(id) {
     // setTasks(
     //   tasks.map((task) =>
-    //     task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
+    //     task.id === id ? { ...task, completed: !task.completed } : task
     //   )
     // );
     dispatch(markAsCompleted(id));
@@ -52,7 +52,7 @@ export default function TodoItem({
       }}
     >
       <Pressable
-        style={item.isCompleted ? styles.checked : styles.unchecked}
+        style={item.completed ? styles.checked : styles.unchecked}
         onPress={() => {
           toggleTask(item.id);
         }}
@@ -61,7 +61,7 @@ export default function TodoItem({
         onPress={() => navigation.navigate("TODO DETAILS", { item })}
         style={{ flex: 1 }}
       >
-        <Text style={item.isCompleted ? styles.doneTodo : styles.pendingTodo}>
+        <Text style={item.completed ? styles.doneTodo : styles.pendingTodo}>
           {item.title}
         </Text>
       </Pressable>

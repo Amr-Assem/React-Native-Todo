@@ -21,8 +21,8 @@ export default function TodoDetails({ route }) {
     <ImageBackground source={image} resizeMode="cover" style={styles.container}>
       <StatusBar style="auto" />
       <Text style={styles.header}>TASK DETAILS</Text>
-      <Text style={item.isCompleted ? styles.completed : styles.incomplete}>
-        {item.isCompleted ? "Completed" : "Incomplete"}
+      <Text style={item.completed ? styles.completed : styles.incomplete}>
+        {item.completed ? "Completed" : "Incomplete"}
       </Text>
       <Text style={styles.input}>{item.title}</Text>
       <Text multiline={true} style={{ ...styles.input, height: 104 }}>
