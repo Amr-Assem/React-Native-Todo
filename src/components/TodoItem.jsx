@@ -2,7 +2,12 @@ import { View, Text, Pressable } from "react-native";
 import { styles } from "../styles/styles";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function TodoItem({ item, navigation, toggleTask, showDeleteModal }) {
+export default function TodoItem({
+  item,
+  navigation,
+  toggleTask,
+  showDeleteModal,
+}) {
   return (
     <View
       style={{
