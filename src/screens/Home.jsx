@@ -5,34 +5,46 @@ import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "../redux/slices/todoSlice";
 
 export default function Home() {
   /* -------------------------------------------------------------------------- */
-  /*                       Handling States using useState                       */
+  /*                      AsyncStorage + UseState --> Redux                     */
   /* -------------------------------------------------------------------------- */
 
   // const [tasks, setTasks] = useState([]);
+  const { tasks } = useSelector((state) => state.todoSlice);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   loadTasks();
-  // }, []);
+  useEffect(() => {
+    loadTasks();
+  }, []);
 
-  // useEffect(() => {
-  //   saveTasks(tasks);
-  // }, [tasks]);
+  useEffect(() => {
+    saveTasks(tasks);
+  }, [tasks]);
 
-  // async function loadTasks() {
-  //   const savedTasks = await AsyncStorage.getItem("tasks");
-  //   if (savedTasks) {
-  //     setTasks(JSON.parse(savedTasks));
-  //   } else {
-  //     setTasks([]);
-  //   }
-  // }
+  async function loadTasks() {
+    // await AsyncStorage.clear()
+    const savedTasks = await AsyncStorage.getItem("tasks");
+    const tasksArray = JSON.parse(savedTasks);
+    if (savedTasks) {
+      // setTasks(JSON.parse(savedTasks));
+      tasksArray.forEach((task) => {
+        dispatch(addTask(task));
+      });
+    } else {
+      console.log("EMPTY");
+      // setTasks([]);
+    }
+  }
 
-  // async function saveTasks(tasks) {
-  //   await AsyncStorage.setItem("tasks", JSON.stringify(tasks));
-  // }
+  async function saveTasks(tasks) {
+    if (tasks.length) {
+      await AsyncStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+  }
 
   return (
     <View style={styles.container}>

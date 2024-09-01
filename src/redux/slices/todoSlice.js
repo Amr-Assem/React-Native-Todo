@@ -3,11 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const todoSlice = createSlice({
     name: "todoSlice",
     initialState: {
-        tasks: [
-            { id: 1, title: "React Native Lecture", isCompleted: true },
-            { id: 2, title: "React Native Lab", isCompleted: true },
-            { id: 3, title: "Read more about React UI Components", isCompleted: false },
-        ],
+        tasks: [],
     },
     reducers: {
         addTask: (state, action) => {
